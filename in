@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<style>
+body{
+    background-color: green;
+    margin: 0 320px;
+    color: skyblue;
+}
+
+h2{
+    color:yellow;
+    position: absolute;
+    top: 0;
+    right: 500px;
+}
+
+#disp_btn#disp_btn{
+    background-color: green;
+}
+
+#sel_bsn>button{
+    background-color: blue;
+    font-size: 33px;
+}
+
+#appForm,#b1Upgrades,#monthReport,#licenceFee,#opening{
+    display: none;
+}
+#retailForm{
+    display: none;
+}
+
+#funds{
+    font-size:50px;
+    color: white;
+}
+
+
+p{
+    font-size:30px;
+}
+
+#building1,#groupDiv{
+    width: min-content;
+    position: fixed;
+    top:0;
+    left:0;
+}
+
+#groupDiv{
+    z-index:10;
+    top:30px;
+}
+
+
+button{
+    font-size: 20px;
+    background-color: #f44336;
+    color: yellow;
+}
+button:hover{
+    background-color: #da190b;
+    color: white;
+    cursor: pointer;
+}
+
+#appForm>p>span{
+    color:purple;
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    body{
+        margin: 320px 0;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    body{
+        margin: 320px 0;
+    }
+
+    p{
+        font-size:20px;
+    }
+}
+
+</style>
+<div id="funds">$500,000</div>
+<div id="sel_bsn">
+    <button id="disp_btn">Dispensing</button>
+    <button>Cultivation</button>
+    <button>Manufacturing</button>
+</div>
+<div id="appForm">
+    <button id="payAppFee">Submit Application</button>
+    <p>Application cost <span>$5,000</span></p>
+    <p>Lawyer review license application. <span>$1,000</span></p>
+    <p>CPA review taxes<span>$1,000</span></p>
+    <h2>By Jan 1, 2020</h2>
+</div>
+<div id="licenceFee">
+    <button id="payLicenceFee">Submit License Fee</button>
+    <p>Congratulation! You have been awarded a license.</p>
+    <p>Dispensary License Fee cost $60,000</p>
+    <h2>By May 1, 2020</h2>
+</div>
+<div id="retailForm">
+    <button id="payRentFee">Submit Rent Down payment.</button>
+    <!--<p>1800 ft<sup>2</sup> <b>$2,000</b></p>-->
+    <p>2800 ft<sup>2</sup> <b>$3,000</b></p>
+    <!--<p>4000 ft<sup>2</sup> <b>$4,000</b></p>-->
+    <h2>May, 2020</h2>
+</div>
+<div id="b1Upgrades">
+    <button id="payBuild">Submit Build-out Cost.</button>
+    <p>Construction/Build-out/Retro-fitting<b>$50,000</b></p>
+    <p>Furniture Fixtures & Equipment (FFE)<b>$60,000</b></p>
+    <p>Marketing<b>$2,400</b></p>
+    <h2>May, 2020</h2>
+</div>
+<div id="opening">
+    <button id="payProduct">Submit product expense.</button>
+    <p>Monthly rent<b>$3,000</b></p>
+    <p>Electricity, water, internet, etc<b>$1,500</b></p>
+    <p>Product<b>$230,000</b></p>
+    <h2>June, 2020</h2>
+</div>
+<div id="monthReport">
+    <p>Congratulation on your first month of operations!</p>
+    <p>Avg. Transaction rate $50/5min. <br>Open for 8 hours a day, 24 days a month:<b style="color:lightgreen">$115,200/month</b></p>
+    <p>Your profit margin is 50%. Therefor your profit is $57,600</p>
+    <p>Pay employees. Total 18,600 for 4 budtenders, 2 guards, and 1 manager.</p>
+    <p>Net month profit 57,000 - 18,600 = $39,000</p>
+    <h2>June, 2020</h2>
+    <!--<p>Furniture Fixtures & Equipment (FFE)<b>$60,000</b></p>-->
+    <!--<p>Marketing<b>$2,400</b></p>-->
+    <!--<button id="payBuild">Submit Rent Downpayment.</button>-->
+</div>
+
+
+<div id="group"></div>
+<div id="buildings"></div>
+<script>let totalFunds = 50000;
+let dispBtn = document.getElementById("disp_btn");
+let selBsn = document.getElementById("sel_bsn");
+let fundsDiv = document.getElementById("funds");
+let appForm = document.getElementById("appForm");
+let buildingsDiv = document.getElementById("buildings");
+let monthReportDiv = document.getElementById("monthReport");
+let licenceFeeDiv = document.getElementById("licenceFee");
+let openingDiv = document.getElementById("opening");
+let groupDiv = document.getElementById("group");
+
+function numWCommas(num){
+    fundsDiv.innerHTML = "$" + num.toLocaleString('en', {useGrouping:true});
+}
+
+function nextMenu(hideEl, showEl){
+    hideEl.style.display = "none";
+    showEl.style.display = "block";
+}
+
+dispBtn.onclick = function(){
+    nextMenu(selBsn, appForm)
+    totalFunds += 450000;
+    numWCommas(totalFunds);
+    createGroup();
+}
+
+payAppFee.onclick = function(){
+    nextMenu(appForm, licenceFeeDiv)
+    totalFunds -= 7000;
+    numWCommas(totalFunds);
+    createBuilding1();
+}
+
+payLicenceFee.onclick = function(){
+    nextMenu(licenceFeeDiv,retailForm);
+    totalFunds -= 60000;
+    numWCommas(totalFunds);
+}
+
+payRentFee.onclick = function(){
+    nextMenu(retailForm,b1Upgrades);
+    totalFunds -= 3000;
+    numWCommas(totalFunds);
+}
+
+let building = document.createElement("div");
+function createBuilding1(){
+
+    building.setAttribute( "id", "building1" );
+    building.style.color = "brown";
+    building.style.backgroundColor = "lightgreen";
+    building.style.width = "300px";
+    building.style.height = "300px";
+    building.innerHTML = "Building1"
+
+    buildingsDiv.appendChild(building);
+}
+
+let group = document.createElement("div");
+function createGroup(){
+
+    group.setAttribute( "id", "groupDiv" );
+    group.style.color = "purple";
+    group.style.backgroundColor = "teal";
+    group.style.width = "100px";
+    group.style.height = "100px";
+    group.innerHTML = "<b>Founders</b> <br>Operators <br> Managers <br> Executives"
+
+    groupDiv.appendChild(group);
+}
+
+payBuild.onclick = function(){
+    nextMenu(b1Upgrades,openingDiv);
+    totalFunds -= 112400;
+    numWCommas(totalFunds);
+    building.style.backgroundColor = "skyblue";
+    building.innerHTML = "Dispensary"
+}
+
+payProduct.onclick = function(){
+    nextMenu(openingDiv,monthReportDiv);
+    totalFunds -= 234500;
+    numWCommas(totalFunds);
+    building.style.backgroundColor = "skyblue";
+    building.innerHTML = "Dispensary"
+}
+
+
+
+
+
+
+</script>
+</body>
+</html>
